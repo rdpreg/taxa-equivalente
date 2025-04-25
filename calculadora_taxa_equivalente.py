@@ -8,10 +8,10 @@ def calcular_taxa_equivalente(taxa, n1, n2):
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
 st.markdown("""
-    <h2 style='display: flex; align-items: center; gap: 10px;'>
-        <img src="https://emojicdn.elk.sh/📈" width="30"/> 
+    <h3 style='display: flex; align-items: center; gap: 10px;'>
+        #<img src="https://emojicdn.elk.sh/📈" width="30"/> 
         <span style='color: #222;'>Cálculo de Taxa Equivalente</span>
-    </h2>
+    </h3>
 """, unsafe_allow_html=True)
 
 # Inputs principais
