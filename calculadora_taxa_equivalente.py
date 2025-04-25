@@ -88,5 +88,7 @@ if st.session_state.get("calcular_btn") or st.query_params.get("calcular") is no
     resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
     st.session_state["taxa_equivalente"] = resultado
     st.experimental_rerun()
-
-if st.session_state.get("limpar_btn") or st.query_params.get("limpar")_
+    
+if st.session_state.get("limpar_btn") or st.query_params.get("limpar") is not None:
+    st.session_state.clear()
+    st.experimental_rerun()
