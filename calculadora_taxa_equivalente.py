@@ -7,13 +7,13 @@ def calcular_taxa_equivalente(taxa, n1, n2):
 
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
-# Estilo dos botões com espaçamento
+# CSS com pequeno espaçamento entre botões
 st.markdown("""
     <style>
     .custom-button-row {
         display: flex;
         justify-content: flex-end;
-        gap: 12px;
+        gap: 8px;
         margin-top: 1.2rem;
     }
 
@@ -47,7 +47,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Título com emoji
+# Título
 st.markdown("""
     <h2 style='display: flex; align-items: center; gap: 10px;'>
         <img src="https://emojicdn.elk.sh/📈" width="30"/> 
@@ -69,7 +69,7 @@ with col3:
 with col4:
     periodo_para = st.number_input("Período (para)", min_value=1, step=1, format="%d")
 
-# Botões com espaçamento
+# Botões com pequeno espaçamento
 st.markdown('<div class="custom-button-row">', unsafe_allow_html=True)
 col_btn1, col_btn2 = st.columns([1, 1])
 with col_btn1:
@@ -78,7 +78,7 @@ with col_btn2:
     limpar = st.button("LIMPAR")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Lógica dos botões
+# Lógica
 if calcular:
     resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
     st.session_state["taxa_equivalente"] = resultado
