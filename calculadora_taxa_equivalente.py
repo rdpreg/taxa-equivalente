@@ -10,7 +10,7 @@ def calcular_taxa_equivalente(taxa, n1, n2):
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
 # Título
-st.title("📈 Cálculo de Taxa Equivalente")
+st.title("Cálculo de Taxa Equivalente")
 
 # Área de inputs
 col1, col2 = st.columns(2)
@@ -21,8 +21,8 @@ with col2:
 
 col3, col4 = st.columns(2)
 with col3:
-    taxa_equivalente = st.session_state.get("taxa_equivalente", 0.0)
-    st.number_input("Taxa equivalente", value=taxa_equivalente, format="%.4f", disabled=True)
+        st.number_input("Taxa equivalente (%)", value=resultado, format="%.4f", disabled=True)
+
 with col4:
     periodo_para = st.number_input("Período (para)", min_value=1, format="%d")
 
@@ -30,8 +30,10 @@ with col4:
 col_a, col_b, col_c = st.columns([4, 1, 1])
 with col_b:
     if st.button("CALCULAR"):
-        resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
-        st.session_state["taxa_equivalente"] = resultado
+    resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
+else:
+    resultado = st.session_state.get("taxa_equivalente", 0.0)
+
 with col_c:
     if st.button("LIMPAR"):
         st.session_state.clear()
