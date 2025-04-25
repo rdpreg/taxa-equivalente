@@ -5,37 +5,43 @@ def calcular_taxa_equivalente(taxa, n1, n2):
     i2 = (1 + i1) ** (n2 / n1) - 1
     return round(i2 * 100, 4)
 
-# Layout
+# Layout da página
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
-# Estilo dos botões
+# CSS para customizar botões
 st.markdown("""
     <style>
-    .stButton > button:first-child {
+    div.stButton > button {
         font-weight: 600;
         padding: 0.6em 1.5em;
         border-radius: 6px;
     }
-    .stButton.calcular > button {
+
+    /* Botão CALCULAR (primeiro botão dentro da div) */
+    div.stButton:nth-child(1) > button {
         background-color: #0067c1;
         color: white;
         border: none;
     }
-    .stButton.calcular > button:hover {
+
+    div.stButton:nth-child(1) > button:hover {
         background-color: #0059a8;
     }
-    .stButton.limpar > button {
+
+    /* Botão LIMPAR (segundo botão) */
+    div.stButton:nth-child(2) > button {
         background-color: white;
         color: #0067c1;
         border: 2px solid #0067c1;
     }
-    .stButton.limpar > button:hover {
+
+    div.stButton:nth-child(2) > button:hover {
         background-color: #f1f8ff;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Título
+# Título com emoji
 st.markdown(
     """
     <h2 style='display: flex; align-items: center; gap: 10px;'>
@@ -63,27 +69,10 @@ with col4:
 # Botões alinhados à direita
 col5, col6, col7 = st.columns([6, 1, 1])
 with col6:
-    with st.container():
-        if st.button("CALCULAR", key="calcular_btn"):
-            resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
-            st.session_state["taxa_equivalente"] = resultado
+    if st.button("CALCULAR"):
+        resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
+        st.session_state["taxa_equivalente"] = resultado
 with col7:
-    with st.container():
-        if st.button("LIMPAR", key="limpar_btn"):
-            st.session_state.clear()
-            st.experimental_rerun()
-
-# Aplica classes personalizadas aos botões
-st.markdown("""
-    <script>
-    const buttons = window.parent.document.querySelectorAll("button");
-    buttons.forEach(btn => {
-        if (btn.innerText === "CALCULAR") {
-            btn.parentElement.classList.add("calcular");
-        }
-        if (btn.innerText === "LIMPAR") {
-            btn.parentElement.classList.add("limpar");
-        }
-    });
-    </script>
-""", unsafe_allow_html=True)
+    if st.button("LIMPAR"):
+        st.session_state.clear()
+        st.experimental_rerun()
