@@ -7,17 +7,16 @@ def calcular_taxa_equivalente(taxa, n1, n2):
 
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
-# CSS para botão + espaçamento real entre os dois
+# CSS com espaçamento suave entre botões
 st.markdown("""
     <style>
-    .button-row {
+    .button-container {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
         margin-top: 20px;
     }
-
-    .button-row button {
+    .button-container button {
         font-weight: 600 !important;
         padding: 10px 24px;
         border-radius: 6px;
@@ -25,24 +24,20 @@ st.markdown("""
         white-space: nowrap;
         font-size: 15px;
     }
-
-    .button-row button.calc {
+    .button-container .stButton:nth-child(1) button {
         background-color: #0067c1;
         color: white;
         border: none;
     }
-
-    .button-row button.calc:hover {
+    .button-container .stButton:nth-child(1) button:hover {
         background-color: #0059a8;
     }
-
-    .button-row button.limpar {
+    .button-container .stButton:nth-child(2) button {
         background-color: white;
         color: #0067c1;
         border: 2px solid #0067c1;
     }
-
-    .button-row button.limpar:hover {
+    .button-container .stButton:nth-child(2) button:hover {
         background-color: #f1f8ff;
     }
     </style>
@@ -70,30 +65,16 @@ with col3:
 with col4:
     periodo_para = st.number_input("Período (para)", min_value=1, step=1, format="%d")
 
-# Botões com espaçamento real via HTML
-col_botao = st.container()
-with col_botao:
-    col_botao.markdown("""
-        <div class="button-row">
-            <form action="?action=calcular" method="post">
-                <button class="calc" type="submit">CALCULAR</button>
-            </form>
-            <form action="?action=limpar" method="post">
-                <button class="limpar" type="submit">LIMPAR</button>
-            </form>
-        </div>
-    """, unsafe_allow_html=True)
-
-# Captura da ação dos botões HTML (via query param)
-query_params = st.experimental_get_query_params()
-acao = query_params.get("action", [None])[0]
-
-if acao == "calcular":
-    resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
-    st.session_state["taxa_equivalente"] = resultado
-    st.experimental_set_query_params()  # limpa a URL
-
-elif acao == "limpar":
-    st.session_state.clear()
-    st.experimental_set_query_params()  # limpa a URL
-    st.experimental_rerun()
+# Botões nativos com container customizado
+with st.container():
+    st.markdown('<div class="button-container">', unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        if st.button("CALCULAR"):
+            resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
+            st.session_state["taxa_equivalente"] = resultado
+    with col2:
+        if st.button("LIMPAR"):
+            st.session_state.clear()
+            st.experimental_rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
