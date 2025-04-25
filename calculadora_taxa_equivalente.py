@@ -30,4 +30,3 @@ with col5:
 with col6:
     if st.button("LIMPAR"):
         st.experimental_rerun()
-``
