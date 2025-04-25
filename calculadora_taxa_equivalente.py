@@ -9,7 +9,6 @@ st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centere
 
 st.markdown("""
     <h3 style='display: flex; align-items: center; gap: 10px;'>
-        #<img src="https://emojicdn.elk.sh/📈" width="30"/> 
         <span style='color: #222;'>Cálculo de Taxa Equivalente</span>
     </h3>
 """, unsafe_allow_html=True)
