@@ -7,41 +7,42 @@ def calcular_taxa_equivalente(taxa, n1, n2):
 
 st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centered")
 
-# CSS com pequeno espaçamento entre botões
+# CSS para botão + espaçamento real entre os dois
 st.markdown("""
     <style>
-    .custom-button-row {
+    .button-row {
         display: flex;
         justify-content: flex-end;
-        gap: 8px;
-        margin-top: 1.2rem;
+        gap: 10px;
+        margin-top: 20px;
     }
 
-    .custom-button-row .stButton > button {
-        font-weight: 600;
-        padding: 0.6em 1.5em;
+    .button-row button {
+        font-weight: 600 !important;
+        padding: 10px 24px;
         border-radius: 6px;
         min-width: 130px;
         white-space: nowrap;
+        font-size: 15px;
     }
 
-    .custom-button-row .stButton:first-child > button {
+    .button-row button.calc {
         background-color: #0067c1;
         color: white;
         border: none;
     }
 
-    .custom-button-row .stButton:first-child > button:hover {
+    .button-row button.calc:hover {
         background-color: #0059a8;
     }
 
-    .custom-button-row .stButton:last-child > button {
+    .button-row button.limpar {
         background-color: white;
         color: #0067c1;
         border: 2px solid #0067c1;
     }
 
-    .custom-button-row .stButton:last-child > button:hover {
+    .button-row button.limpar:hover {
         background-color: #f1f8ff;
     }
     </style>
@@ -69,20 +70,30 @@ with col3:
 with col4:
     periodo_para = st.number_input("Período (para)", min_value=1, step=1, format="%d")
 
-# Botões com pequeno espaçamento
-st.markdown('<div class="custom-button-row">', unsafe_allow_html=True)
-col_btn1, col_btn2 = st.columns([1, 1])
-with col_btn1:
-    calcular = st.button("CALCULAR")
-with col_btn2:
-    limpar = st.button("LIMPAR")
-st.markdown('</div>', unsafe_allow_html=True)
+# Botões com espaçamento real via HTML
+col_botao = st.container()
+with col_botao:
+    col_botao.markdown("""
+        <div class="button-row">
+            <form action="?action=calcular" method="post">
+                <button class="calc" type="submit">CALCULAR</button>
+            </form>
+            <form action="?action=limpar" method="post">
+                <button class="limpar" type="submit">LIMPAR</button>
+            </form>
+        </div>
+    """, unsafe_allow_html=True)
 
-# Lógica
-if calcular:
+# Captura da ação dos botões HTML (via query param)
+query_params = st.experimental_get_query_params()
+acao = query_params.get("action", [None])[0]
+
+if acao == "calcular":
     resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
     st.session_state["taxa_equivalente"] = resultado
+    st.experimental_set_query_params()  # limpa a URL
 
-if limpar:
+elif acao == "limpar":
     st.session_state.clear()
+    st.experimental_set_query_params()  # limpa a URL
     st.experimental_rerun()
