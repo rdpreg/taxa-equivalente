@@ -27,7 +27,7 @@ with col4:
     periodo_para = st.number_input("Período (para)", min_value=1, format="%d")
 
 # Área dos botões
-col_a, col_b, col_c = st.columns([5, 1, 1])
+col_a, col_b, col_c = st.columns([4, 1, 1])
 with col_b:
     if st.button("CALCULAR"):
         resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
