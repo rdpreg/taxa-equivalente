@@ -26,7 +26,7 @@ with col3:
 
 # Botões
 resultado = 0.0
-col_a, col_b, col_c = st.columns([5, 1.5, 1.5])
+col_a, col_b, col_c = st.columns([4, 1, 1])
 with col_b:
     if st.button("CALCULAR"):
         resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
