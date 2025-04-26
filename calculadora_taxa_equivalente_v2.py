@@ -11,14 +11,14 @@ st.set_page_config(page_title="Calculadora de Taxa Equivalente", layout="centere
 st.markdown("""
     <style>
     div[data-testid="stNumberInput"] input[readonly] {
-        border: 2px solid #cccccc;
+        border: 2px solid #f70c0c;
         background-color: #f9f9f9;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # Título
-st.title("📈 Cálculo de Taxa Equivalente")
+#st.title("Cálculo de Taxa Equivalente")
 
 # Inputs
 col1, col2 = st.columns(2)
@@ -32,7 +32,7 @@ with col3:
     periodo_para = st.number_input("Período (para)", min_value=1, format="%d")
 
 resultado = 0.0
-col_a, col_b, col_c = st.columns([5, 1.5, 1.5])
+col_a, col_b, col_c = st.columns([4, 1, 1])
 with col_b:
     if st.button("CALCULAR"):
         resultado = calcular_taxa_equivalente(taxa, periodo_de, periodo_para)
